@@ -24,12 +24,18 @@ export default function DownloadPage() {
 
     try {
       // Substitua pela URL real da sua API em Python quando subir o backend
-      const response = await fetch(`http://localhost:8000/baixar-trecho?url=${encodeURIComponent(url)}&inicio=${inicio}&fim=${fim}`);
-      
+      const response = await fetch("http://localhost:8000/api/video/cortar", {
+        method: 'POST',
+        body: JSON.stringify({ url, inicio, fim }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
       if (!response.ok) throw new Error('Erro ao processar o vídeo no servidor.');
 
       setStatus('Baixando arquivo...');
-      
+
       // Recebe o arquivo blob (MP4) e força o download no navegador
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
@@ -39,7 +45,7 @@ export default function DownloadPage() {
       document.body.appendChild(a);
       a.click();
       a.remove();
-      
+
       setStatus('');
     } catch (error) {
       console.error(error);
@@ -55,7 +61,7 @@ export default function DownloadPage() {
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-600/10 blur-[120px] rounded-full pointer-events-none" />
 
       <main className="w-full max-w-2xl bg-slate-900/60 border border-slate-800 backdrop-blur-md rounded-2xl p-6 md:p-8 shadow-2xl relative z-10">
-        
+
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
@@ -68,7 +74,7 @@ export default function DownloadPage() {
         </div>
 
         <form onSubmit={handleDownload} className="space-y-6">
-          
+
           {/* Input da URL */}
           <div className="space-y-2">
             <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider block">
@@ -86,7 +92,7 @@ export default function DownloadPage() {
 
           {/* Seletores de Tempo (Grid) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-            
+
             {/* Tempo de Início */}
             <div className="bg-slate-950/50 border border-slate-800/80 p-4 rounded-xl flex flex-col justify-between">
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-3">
@@ -153,8 +159,8 @@ export default function DownloadPage() {
             type="submit"
             disabled={loading}
             className={`w-full py-4 rounded-xl font-bold text-white tracking-wide shadow-lg shadow-indigo-500/20 transition-all duration-200 
-              ${loading 
-                ? 'bg-slate-800 text-slate-500 cursor-not-allowed' 
+              ${loading
+                ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
                 : 'bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-[0.99]'
               }`}
           >
