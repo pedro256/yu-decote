@@ -115,7 +115,7 @@ MinIO__SecretKey=minioadmin
 
 ## ⚠️ Observações sobre infraestrutura
 
-O desempenho do worker depende diretamente da **banda de rede entre o servidor e os CDNs do YouTube**. Em ambiente local (especialmente em regiões com peering indireto com o Google, como Manaus), o download pode ser significativamente mais lento do que em servidores cloud com presença em São Paulo ou nos EUA.
+O desempenho do worker depende diretamente da **banda de rede entre o servidor e os CDNs do YouTube**. Em ambiente local (especialmente em regiões com peering indireto com o Google), o download pode ser significativamente mais lento do que em servidores cloud com presença em São Paulo ou nos EUA.
 
 Em produção, recomenda-se uma VM com:
 
